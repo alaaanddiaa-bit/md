@@ -215,7 +215,13 @@
         const filename = blob.type.includes("ogg") ? "audio.ogg" : "audio.webm";
         fd.append("audio", blob, filename);
 
-        const res = await fetch(endpoint, { method: "POST", body: fd });
+        const res = await fetch(endpoint, {
+  method: "POST",
+  mode: "cors",
+  credentials: "omit",
+  body: fd
+});
+;
         if (!res.ok) {
           const t = await res.text().catch(() => "");
           throw new Error(`HTTP ${res.status} ${res.statusText} ${t ? ("— " + t.slice(0, 200)) : ""}`);
